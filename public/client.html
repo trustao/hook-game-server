@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<button id="create">create</button>
+
+<input type="text" id="input">
+<button id="connect">connect</button>
+</body>
+<script>
+  create.addEventListener('click', createRoom)
+  connect.addEventListener('click', () => {
+    connectSocket(input.value)
+  })
+  function createRoom () {
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function (ev) {
+      if (xhr.status === 200 && xhr.readyState === 4) {
+        console.log(xhr.responseText)
+        input.value = xhr.responseText
+      }
+    }
+    xhr.open('GET', '/createRoom')
+    xhr.setRequestHeader("hook-key", "bqZf4tKMqCR9dKGN8ce609bvwQOXIQRJ5Bv4zavAvrATbyX9po6EqcGCZ4O+w+g2JKk62uNoiCE1dpCHIT4ouA==");
+    xhr.send()
+  }
+  function connectSocket (roomId) {
+    var socket = new WebSocket('ws://localhost:3000/_socket/' + roomId)
+    socket.onopen = function (e) {
+      console.log('[open]', e)
+
+      socket.send('Hello server.I\'m client.')
+    }
+
+    socket.onmessage = function (e) {
+      console.log('[message]: ', e.data)
+    }
+
+    socket.onclose = function (e) {
+      console.log('[close]: ', e)
+    }
+    socket.onerror = function (e) {
+      console.log('[err]', e)
+    }
+  }
+</script>
+</html>
