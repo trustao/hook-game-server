@@ -1,5 +1,8 @@
 const errors = {
-
+  MESSAGE_ERROR: {
+    code: 6000,
+    msg: '格式错误'
+  },
   USER_LOGIN_ERROR: {
     code: 7001,
     msg: '登陆失败'

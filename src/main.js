@@ -56,7 +56,7 @@ class KoaWs extends Koa {
       if (room) {
         if (room.ws.clients.size === 0) {
           item.checkCount++
-          if (item.checkCount >= 5) {
+          if (item.checkCount >= 1) {
             this.closeSocket(item.roomId)
             this.willCloseSockets.splice(i, 1)
             i--

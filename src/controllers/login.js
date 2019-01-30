@@ -24,6 +24,7 @@ async function login (ctx, next) {
       const uuid = util.createUUID(userKeys.session_key, userKeys.openid)
       const res = await modal.user.createUser({...userInfo, ...userKeys, uuid})
       res.data = uuid
+      res.userInfo.id = userKeys.openid
       ctx.body = res
     }
   } else {

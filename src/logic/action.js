@@ -23,13 +23,23 @@ const position = (players) => {
   return baseParam(
     ACTIONS.POSITION_FRAMER,
     players.map(player => {
-      const {id, postion, status} = player
-      return {id, postion, status}
+      const {id, position, radian} = player
+      return {id, position, radian}
     })
   )
 }
 
 const heartbeat = () => baseParam(ACTIONS.HEARTBEAT)
+const gameReady = () => baseParam(ACTIONS.GAME_READY)
+const gameStart = (players) => baseParam(
+  ACTIONS.GAME_START,
+  players.map(player => {
+    const {id, position, radian, status} = player
+    return {id, position, radian, status}
+  }))
+const gameOver = (players) => baseParam(ACTIONS.OVER, players.map(({id, score}) => ({id, score})))
+
+const pingBack = () => baseParam(ACTIONS.PING)
 
 module.exports = {
   playerList,
@@ -37,5 +47,9 @@ module.exports = {
   joinPlayer,
   quitPlayer,
   position,
-  heartbeat
+  heartbeat,
+  gameReady,
+  gameStart,
+  gameOver,
+  pingBack
 }
